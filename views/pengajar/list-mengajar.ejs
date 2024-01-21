@@ -1,0 +1,150 @@
+<%- include('partials/header') %>
+<%- include('partials/sidebar') %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">List Kelas</h1>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Kelas</li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+  </div>
+  <!-- Main content -->
+  <section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body pb-0">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+            <% list_kelas.forEach((kelas) => { %>
+            <div class="card bg-light d-flex flex-fill">
+              <div class="card-header text-muted border-bottom-0">
+                <%= kelas.nama_kelas  %>
+              </div>
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-7">
+                    <h2 class="lead"><b><%= kelas.mata_pelajaran %></b></h2>
+                  </div>
+                  <div class="col-5 text-center">
+                    <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid" />
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="text-right">
+                  <a href="#" class="btn btn-sm bg-teal">
+                    <i class="fas fa-tasks"></i>
+                  </a>
+                  <a href="/pengajar/halaman-kelas/<%= kelas.kode_kelas %>" class="btn btn-sm btn-primary">
+                    <i class="fas fa-user"></i> Lihat Kelas
+                  </a>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+
+          <button type="button" class="btn btn-app" data-toggle="modal" data-target="#modal-default">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        <nav aria-label="Contacts Page Navigation">
+          <ul class="pagination justify-content-center m-0">
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+  </section>
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+    <h5>Title</h5>
+    <p>Sidebar content</p>
+  </div>
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- Main Footer -->
+<footer class="main-footer">
+  <!-- To the right -->
+  <div class="float-right d-none d-sm-inline">Anything you want</div>
+  <!-- Default to the left -->
+  <strong>Copyright &copy; 2014-2021
+    <a href="https://adminlte.io">Assma</a>.</strong>
+  All rights reserved.
+</footer>
+</div>
+<!-- ./wrapper -->
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/pengajar/buat-kelas" method="POST">
+        <div class="modal-header">
+          <h4 class="modal-title">Buat Kelas</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="callout callout-info">
+            <h5>Buat Kelas</h5>
+
+            <p>Setelah kelas dibuat, bagikan kode ke siswa anda</p>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nama Kelas</label>
+              <input type="text" name="nama_kelas" class="form-control" id="exampleInputEmail1" placeholder="Nama Kelas(Wajib)">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Mata Pelajaran</label>
+              <input type="text" name="mata_pelajaran" class="form-control" id="exampleInputPassword1" placeholder="Mata Pelajaran">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Ruang Kelas</label>
+              <input type="text" name="ruang_kelas" class="form-control" id="exampleInputPassword1" placeholder="Ruang Kelas">
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Kembali
+          </button>
+          <button type="submit" class="btn btn-primary">Buat Kelas</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<%- include('partials/footer') %>

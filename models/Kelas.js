@@ -30,26 +30,32 @@ class Kelas {
   }
 
   static async getByCode(kode_kelas) {
-    const query = "SELECT * FROM kelas WHERE kode_kelas = ?";
-    const [rows] = await db.execute(query, [kode_kelas]);
+    try {
+      const query = `
+        SELECT k.*, p.nama_pengajar
+        FROM kelas k
+        JOIN pengajar p ON k.npp = p.npp
+        WHERE k.kode_kelas = ?`;
+      const [rows] = await db.execute(query, [kode_kelas]);
 
-    return rows[0]
-      ? new Kelas(
-          rows[0].kode_kelas,
-          rows[0].npp,
-          rows[0].nama_kelas,
-          rows[0].mata_pelajaran,
-          rows[0].ruang_kelas
-        )
-      : null;
+      return rows;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get class by code");
+    }
   }
 
   // Untuk mendapatkan daftar siswa yang tergabung dalam kelas
-  async getAnggota() {
-    const query =
-      "SELECT s.nps, s.nama_siswa FROM anggota_kelas ak JOIN siswa s ON ak.nps = s.nps WHERE ak.kode_kelas = ?";
-    const [rows] = await db.execute(query, [this.kode_kelas]);
-    return rows.map((row) => ({ nps: row.nps, nama_siswa: row.nama_siswa }));
+  static async getAnggota(kode_kelas) {
+    try {
+      const query =
+        "SELECT s.nps, s.nama_siswa FROM anggota_kelas ak JOIN siswa s ON ak.nps = s.nps WHERE ak.kode_kelas = ?";
+      const [rows] = await db.execute(query, [kode_kelas]);
+      return rows.map((row) => ({ nps: row.nps, nama_siswa: row.nama_siswa }));
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get class members");
+    }
   }
 }
 

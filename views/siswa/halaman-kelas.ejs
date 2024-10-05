@@ -1,0 +1,202 @@
+<%- include('partials/header')  %>
+<%- include('partials/sidebar')  %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Ruang Kelas</h1>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Kelas</li>
+            <li class="breadcrumb-item active">Ruang Kelas</li>
+          </ol>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <div class="content"></div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="container-fluid">
+      <div class="card card-primary card-tabs">
+        <div class="card-header p-0 pt-1 bg-light-blue">
+          <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+            <li class="pt-2 px-3">
+              <h3 class="card-title"><%= data_kelas.ruang_kelas  %></h3>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">Forum</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Anggota</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Messages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill" href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings" aria-selected="false">Settings</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-two-tabContent">
+            <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+              <div class="col-md-8 mx-auto">
+                <div class="card card-widget widget-user">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username"><%= data_kelas.mata_pelajaran  %></h3>
+                    <h5 class="widget-user-desc"><%= data_kelas.nama_pengajar  %></h5>
+                  </div>
+
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-6 border-right">
+                        <div class="description-block">
+                          <h5 class="description-header"><%= anggota_kelas.length  %></h5>
+                          <span class="description-text">Anggota Kelas</span>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-6">
+                        <div class="description-block">
+                          <h5 class="description-header"><%= tugas_kelas.length  %></h5>
+                          <span class="description-text">Tugas</span>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="card card-primary collapsed-card">
+                      <div class="card-header align-center">
+                        <h5 class="card-title">Tugas Terbaru</h5>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <!-- /.card-tools -->
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+
+                        <%= tugas_kelas[0].judul_tugas  %>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                  <div class="col-md-9">
+
+                    <h2>
+                      Tugas Yang Tersedia
+                    </h2>
+                    <hr>
+                    <% if(tugas_kelas.length > 0) { %>
+                    <% tugas_kelas.forEach((tugas) => { %>
+                    <div class="card card-primary collapsed-card my-3">
+                      <div class="card-header">
+                        <h3 class="card-title"><%= tugas.judul_tugas  %></h3>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <!-- /.card-tools -->
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <h3><%= tugas.deskripsi_tugas  %></h3>
+                        <hr>
+                        <div class="row justify-content-between">
+                          <h4>Diserahkan :</h4>
+                          <h4>0</h4>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <% }) %>
+                    <% } else { %>
+                    <p>Anda Belum Membuat Tugas</p>
+                    <% } %>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel" aria-labelledby="custom-tabs-two-profile-tab">
+              <h5>Pengajar</h5>
+              <div class="callout callout-info">
+                <p><%= data_kelas.nama_pengajar  %></p>
+              </div>
+              <h5>Siswa</h5>
+              <% if(anggota_kelas.length > 0 ) { %>
+              <% anggota_kelas.forEach((siswa) => { %>
+              <div class="callout callout-info">
+                <p><%= siswa.nama_siswa  %></p>
+              </div>
+              <% }) %>
+              <% } else { %>
+              <p>Belum ada siswa yang masuk.</p>
+              <% } %>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
+              Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+              Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+    <h5>Title</h5>
+    <p>Sidebar content</p>
+  </div>
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- Main Footer -->
+<footer class="main-footer">
+  <!-- To the right -->
+  <div class="float-right d-none d-sm-inline">Anything you want</div>
+  <!-- Default to the left -->
+  <strong>Copyright &copy; 2014-2021
+    <a href="https://adminlte.io">Assma</a>.</strong>
+  All rights reserved.
+</footer>
+</div>
+<!-- ./wrapper -->
+<%- include('partials/footer')  %>

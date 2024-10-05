@@ -1,5 +1,6 @@
 import { Kelas } from "../models/Kelas.js";
 import { Pengajar } from "../models/Pengajar.js";
+import { Tugas } from "../models/Tugas.js";
 
 export const buatKelas = async (req, res) => {
   try {
@@ -11,26 +12,30 @@ export const buatKelas = async (req, res) => {
 
     await kelas.create();
 
-    res.status(201).json({ message: "Kelas Berhasil dibuat" });
+    // res.status(201).json({ message: "Kelas Berhasil dibuat" });'
+
+    res.redirect("/pengajar/list-mengajar");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-export const halamanKelas = async (req, res) => {
+export const halamanKelasPengajar = async (req, res) => {
   try {
     const kode_kelas = req.params.key;
 
     const kelas = await Kelas.getByCode(kode_kelas);
 
-    const pengajar = await Pengajar.getData(kelas.npp);
+    const anggota_kelas = await Kelas.getAnggota(kode_kelas);
 
-    console.log(kelas);
+    const tugas_kelas = await Tugas.getTugas(kode_kelas);
 
+    console.log("tugas kelas", tugas_kelas);
     res.render("pengajar/halaman-kelas", {
-      data_kelas: kelas,
-      data_pengajar: pengajar,
+      data_kelas: kelas[0],
+      anggota_kelas: anggota_kelas,
+      tugas_kelas: tugas_kelas,
     });
   } catch (error) {
     console.error(error);
@@ -78,6 +83,27 @@ export const listMengikuti = async (req, res) => {
     } else {
       res.status(400).json({ message: "Failed to get data mengikuti" });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const halamanKelasSiswa = async (req, res) => {
+  try {
+    const kode_kelas = req.params.key;
+
+    const data_kelas = await Kelas.getByCode(kode_kelas);
+
+    const anggota_kelas = await Kelas.getAnggota(kode_kelas);
+
+    const tugas_kelas = await Tugas.getTugas(kode_kelas);
+
+    res.render("siswa/halaman-kelas", {
+      data_kelas: data_kelas[0],
+      anggota_kelas: anggota_kelas,
+      tugas_kelas: tugas_kelas,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });

@@ -6,11 +6,12 @@ import {
 } from "../controllers/authControllers.js";
 import {
   buatKelas,
-  halamanKelas,
+  halamanKelasPengajar,
   listKelas,
 } from "../controllers/kelasController.js";
 import { requireLoginPengajar } from "../middleware/userAuthMiddleware.js";
 import { pengajarData } from "../middleware/userMiddleware.js";
+import { buatTugas } from "../controllers/tugasControllers.js";
 
 const router = express.Router();
 
@@ -33,6 +34,8 @@ router.get("/dashboard", requireLoginPengajar, (req, res) => {
 
 router.get("/list-mengajar", requireLoginPengajar, listKelas);
 
-router.get("/halaman-kelas/:key", requireLoginPengajar, halamanKelas);
+router.get("/halaman-kelas/:key", requireLoginPengajar, halamanKelasPengajar);
+
+router.post("/buat-tugas/:key", requireLoginPengajar, buatTugas);
 
 export { router };

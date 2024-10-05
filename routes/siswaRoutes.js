@@ -5,8 +5,13 @@ import {
   logoutSiswa,
 } from "../controllers/authControllers.js";
 import { requireLoginSiswa } from "../middleware/userAuthMiddleware.js";
+
 import { siswaData } from "../middleware/userMiddleware.js";
-import { joinKelas, listMengikuti } from "../controllers/kelasController.js";
+import {
+  halamanKelasSiswa,
+  joinKelas,
+  listMengikuti,
+} from "../controllers/kelasController.js";
 
 const router = express.Router();
 
@@ -25,7 +30,7 @@ router.get("/dashboard", requireLoginSiswa, (req, res) => {
   res.render("siswa/dashboard");
   console.log(res.locals);
 });
-
+router.get("/halaman-kelas/:key", requireLoginSiswa, halamanKelasSiswa);
 router.get("/list-mengikuti", requireLoginSiswa, listMengikuti);
 router.post("/join-kelas", requireLoginSiswa, joinKelas);
 
